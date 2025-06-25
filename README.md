@@ -66,4 +66,30 @@ kubectl run devops-toolset --rm -it --image=devops-toolset:latest --restart=Neve
 This will give you an interactive bash shell with all the included DevOps tools, without needing to create a manifest file.
 
 ## Customization
-Feel free to extend the Dockerfile to add more tools as needed for your environment.
+
+Feel free to extend the `Dockerfile` to add more tools. For example, to add `kubectl` and `helm`, you can create a new `Dockerfile` like this:
+
+```Dockerfile
+# Start from the base devops-toolset image
+FROM devops-toolset:latest
+
+# Switch to root user to install packages
+USER root
+
+# Install kubectl and helm
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        kubectl \
+        helm && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Switch back to the non-root user
+USER devops
+```
+
+Then, build the new image:
+
+```
+docker build -t my-devops-toolset -f Dockerfile.custom .
+```
