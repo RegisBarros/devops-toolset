@@ -25,7 +25,7 @@ jobs:
         run: docker save -o ${{ steps.image_name.outputs.name }}.tar ${{ steps.image_name.outputs.name }}
 
       - name: Upload Docker image as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.image_name.outputs.name }}
           path: ${{ steps.image_name.outputs.name }}.tar
@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download Docker image artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build.outputs.image_name }}
 
@@ -53,7 +53,7 @@ jobs:
     needs: build
     steps:
       - name: Download Docker image artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build.outputs.image_name }}
 
@@ -78,7 +78,7 @@ jobs:
       packages: write
     steps:
       - name: Download Docker image artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build.outputs.image_name }}
 
