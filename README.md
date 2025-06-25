@@ -67,6 +67,3 @@ This will give you an interactive bash shell with all the included DevOps tools,
 
 ## Customization
 Feel free to extend the Dockerfile to add more tools as needed for your environment.
-
----
-Maintainer: devops@yourcompany.com
