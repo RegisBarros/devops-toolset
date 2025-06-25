@@ -27,5 +27,13 @@ RUN apt-get update && \
 # Set default shell to bash
 SHELL ["/bin/bash", "-c"]
 
-# Set entrypoint to bash for interactive use
+# Set working directory
+WORKDIR /workspace
+
+# Create a non-root user for security
+RUN useradd -m -s /bin/bash devops
+USER devops
+
+# Set entrypoint and default command for Kubernetes compatibility
 ENTRYPOINT ["/bin/bash"]
+CMD ["-c", "while true; do sleep 30; done"]
