@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Test and Push Docker Image
 
 on:
   push:
@@ -6,8 +6,21 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  test:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build Docker image for testing
+        run: docker build -t devops-toolset-test .
+
+      - name: Run tests
+        run: docker run --rm devops-toolset-test test/verify_tools.sh
+
+  build_and_push:
+    runs-on: ubuntu-latest
+    needs: test
     permissions:
       contents: read
       packages: write
