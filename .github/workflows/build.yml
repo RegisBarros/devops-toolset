@@ -46,7 +46,7 @@ jobs:
         run: docker load -i ${{ needs.build.outputs.image_name }}.tar
 
       - name: Run tests
-        run: docker run --rm ${{ needs.build.outputs.image_name }} test/verify_tools.sh
+        run: docker run --rm -v ${{ github.workspace }}/test:/test ${{ needs.build.outputs.image_name }} /test/verify_tools.sh
 
   scan:
     runs-on: ubuntu-latest
